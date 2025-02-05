@@ -33,14 +33,40 @@ sudo apt-get update
 ```bash
 sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 ```
+#### *Tip: Run Docker without sudo
 
-#### Verify that the installation is successful:
+By default, Docker requires `sudo` to run Docker commands. If you want to run Docker commands as a non-root user, you can follow these steps to configure Docker:
+
+1. Create the Docker group:
+    ```bash
+    sudo groupadd docker
+    ```
+
+2. Add your user to the Docker group:
+    ```bash
+    sudo usermod -aG docker $USER
+    ```
+
+3. Log out and log back in to refresh your group membership.
+
+    Alternatively, you can run:
+    ```bash
+    newgrp docker
+    ```
+
+4. Verify the setup by running:
+    ```bash
+    docker run hello-world
+    ```
+This command downloads a test image and runs it in a container. When the container runs, it prints a confirmation message and exits.
+
+If you had previously used `sudo` with Docker, you may encounter a permission error related to the `~/.docker/` directory. To fix this, run the following commands to adjust the directory's ownership:
 
 ```bash
-sudo docker run hello-world
+sudo chown "$USER":"$USER" /home/"$USER"/.docker -R
+sudo chmod g+rwx "$HOME/.docker" -R
 ```
 
-This command downloads a test image and runs it in a container. When the container runs, it prints a confirmation message and exits.
 ## Content
 ### HOWTO run application
 #### Clone source code of helloword app
@@ -56,7 +82,7 @@ docker build -t helloword_app .
 docker run -d -p 8001:8000 --name django_container helloword_app
 ```
 
-### Dockerfile for helloworld app
+### Example Dockerfile for helloworld app
 
 ```Dockerfile
 # Use the official Python 3.10 image based on Alpine Linux, a lightweight distribution
@@ -96,8 +122,8 @@ CMD [ "python3", "manage.py", "runserver", "0.0.0.0:8000"]
 ### Command use in this tutorial
 | Docker Command                                                                                                                | Description                                                       |
 |-------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------|
-| "docker build . -t eazybytes/accounts:s4"                                                                                     | To generate a docker image based on a Dockerfile                  |
-| "docker run  -p 8080:8080 eazybytes/accounts:s4"                                                                              | To start a docker container based on a given image                |
+| "docker build . -t helloword_app"                                                                                             | To generate a docker image based on a Dockerfile                  |
+| "docker run -d -p 8001:8000 --name django_container helloword_app"                                                            | To start a docker container based on a given image                |
 | "docker images"                                                                                                               | To list all the docker images present in the Docker server        |
 | "docker image inspect image-id"                                                                                               | To display detailed image information for a given image id        |
 | "docker image rm image-id"                                                                                                    | To remove one or more images for a given image ids                |
