@@ -73,6 +73,14 @@ sudo chmod g+rwx "$HOME/.docker" -R
 ```bash
 git clone https://github.com/ducmanh27/tutorial-docker.git
 ```
+**Note for Linux Users:**  
+Before building the container, ensure that the executable file in the project has the correct execution permissions. You can grant execution permissions using the following command:
+
+```bash
+cd ./tutorial-docker
+chmod +x entrypoint.sh
+```
+
 #### Build docker image
 ```bash
 docker build -t helloword_app .
