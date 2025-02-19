@@ -5,10 +5,10 @@ FROM python:3.10-alpine
 WORKDIR /usr/src/app
 
 # Prevent Python from writing .pyc files to disk
-ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONDONTWRITEBYTECODE=1
 
 # Prevent Python output from being buffered (ensures real-time logging)
-ENV PYTHONUNBUFFERED 1
+ENV PYTHONUNBUFFERED=1
 
 # Upgrade pip to the latest version
 RUN pip install --upgrade pip

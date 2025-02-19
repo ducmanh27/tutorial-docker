@@ -81,6 +81,14 @@ cd ./tutorial-docker
 chmod +x entrypoint.sh
 ```
 
+**Note for Windows Users:**  
+Before building the container, ensure that the executable file in the project has the correct execution permissions. You can grant execution permissions by open git bash (or open file entrypoint.sh by VSCode then save with format LF ):
+
+```bash
+cd ./tutorial-docker
+sed -i 's/\r$//' entrypoint.sh
+```
+
 #### Build docker image
 ```bash
 docker build -t helloword_app .
